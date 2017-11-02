@@ -14,23 +14,22 @@ public class EchoServer {
   // Run the server
   public static void main(String[] args) {
     try {
-      ServerSocket listener = new ServerSocket(50000);
-      System.out.println("EchoServer is listening on port 50000.");
+      ServerSocket listener = new ServerSocket(6013);
+      System.out.println("EchoServer is listening on port 6013.");
 
       // Connect to a client
       while (true) { 
-	 System.out.println("Waiting for client.");
+         System.out.println("Waiting for client.");
 
          Socket client = listener.accept();
 	 System.out.println("######--Connection established with client @" + client.getInetAddress().toString() + "--######");
 	 
 	 InputStream in = client.getInputStream();
 	 OutputStream out = client.getOutputStream();
-         byte[] buffer = new byte[4096];
 
-	 int count;
-	 while ((count = in.read(buffer)) > 0) {
-	   out.write(buffer, 0, count);
+	 int nextByte;
+	 while ((nextByte = in.read()) != -1) {
+	   out.write(nextByte);
 	 }
 
 	 in.close();
